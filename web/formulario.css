@@ -1,17 +1,33 @@
-
+    
 body {
   font-family: Arial, sans-serif;
   background-color: #f1f1f1;
+  width: 100vw;
+  height: 100vh;
+  background: url('fondos/fondo1.jpg') no-repeat center center fixed;
+  background-size: cover;
+  overflow:hidden;
+  
 }
 
 .container {
+  filter:none;
   width: 100%;
+  
   max-width: 400px;
   margin: 0 auto;
   padding: 20px;
   background-color: #fff;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0,0,0,0.2);
+  
+}
+
+.ListaError{
+        color:red;   
+}
+ul li .TextoError{
+    color: red;    
 }
 
 h2 {

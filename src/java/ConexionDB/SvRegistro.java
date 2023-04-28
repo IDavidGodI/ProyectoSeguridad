@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Cookie;
 
+
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -64,21 +66,28 @@ public class SvRegistro extends HttpServlet {
         String confirm_clave = request.getParameter("confirm_clave");
         comprobar = regexCorreo.matcher(correo);
         boolean registroCompleto = true;
+        ArrayList<String> errores = new ArrayList<>();
+        sesion.removeAttribute("estadoCorreo");
+        sesion.removeAttribute("estadoClave");
+        sesion.removeAttribute("estadoConfirmClave");
+        sesion.removeAttribute("ListaErrores");
         if (!comprobar.find()){
             sesion.setAttribute("estadoCorreo", "error");
-            System.out.println(request.getAttribute("estadoCorreo"));
+            errores.add("El correo ingresado no es valido");
             registroCompleto=false;
         }
         comprobar = regexClave.matcher(clave);
         if (!comprobar.find()){
             sesion.setAttribute("estadoClave", "error");
+            errores.add("Ingrese una contraseña mas segura (Al menos una mayusula, una minuscula, al menos un caracter especial y un caracter numerico)");
             registroCompleto = false;
         }
         if (!clave.equals(confirm_clave)){
             sesion.setAttribute("estadoConfirmClave", "error");
+            errores.add("Las contraseñas no coinciden");
             registroCompleto=false;
         }
-        
+        sesion.setAttribute("ListaErrores", errores);
         if (registroCompleto)response.sendRedirect("index.jsp");
         else response.sendRedirect("registro.jsp");
     }
