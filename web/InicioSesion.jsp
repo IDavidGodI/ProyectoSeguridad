@@ -20,6 +20,7 @@
                 <label for="clave">Contraseña:</label>
                 <input type="password" name="clave" id="clave"><br><br>
                 <input type="submit" value="Iniciar Sesión">
+                <p>¿Aun no tienes una cuenta? <a href="registro.jsp">Registrate</a></p>
         </form>
     </div>
 </body>

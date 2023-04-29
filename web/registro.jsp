@@ -4,6 +4,7 @@
     Author     : Lenovo
 --%>
 <%@page import = "java.util.List"%>
+<%@page import = "Comunes.Formularios"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -16,37 +17,34 @@
         
         <%
             
-            String estadoCorreo = (String) request.getSession().getAttribute("estadoCorreo");
-            String estadoClave = (String) request.getSession().getAttribute("estadoCorreo");
-            String estadoConfirmClave = (String) request.getSession().getAttribute("estadoCorreo");
-            List<String> errores = (List) request.getSession().getAttribute("ListaErrores");
+            String estadoCorreo = (String) request.getAttribute(Formularios.ESTADO_CORREO);
+            String estadoClave = (String) request.getAttribute(Formularios.ESTADO_CLAVE);
+            String estadoConfirmClave = (String) request.getAttribute(Formularios.ESTADO_CONFIRM_CLAVE);
+            
+            String iCorreo = (String) request.getAttribute(Formularios.CORREO_ENVIADO);
+            String iClave = (String) request.getAttribute(Formularios.CLAVE_ENVIADA);
+            
+            
+
         %>
             
         <h2>Registrarse</h2>
-        <form method="post" action="SvRegistro">
+        <p>En Perros salchicha voladores gatunos cats pio pio muuu</p>
+        
+        <form method="post" action="registro">
                 <label for="correo">Dirección de correo:</label>
-                <input type="text" name="correo" id="correo" estado=<%=estadoCorreo%>><br>
+                <input type="text" name="correo" id="correo" estado=<%=estadoCorreo%> value=<%=iCorreo!=null?iCorreo:""%>><br>
                 <label for="password">Contraseña:</label>
-                <input type="password" name="clave" id="clave" estado=<%=estadoClave%>><br>
+                <input type="password" name="clave" id="clave" estado=<%=estadoClave%> value=<%=iClave!=null?iClave:""%>><br>
                 <label for="confirm_password">Confirmar Contraseña:</label>
                 <input type="password" name="confirm_clave" id="confirm_clave" estado=<%=estadoConfirmClave%>><br><br>
                 <input type="submit" value="Registrarse">
+                <p>¿Ya tienes una cuenta? <a href="InicioSesion.jsp"> Inicia sesion</a></p>
         </form>
-                <ul class="ListaError">
-                    <%
-                        if (errores!=null)
-                        for (String error : errores){
-                    %>
-                        <li>
-                            <p class="TextoError"><%=error%></p>
-                        </li>
-                    <%}%>
-                </ul>
+        <jsp:include page="ListaErrores.jsp" />
+
     </div>
-                
-        <%
-            
-        %>
+
 </body>
 </html>
 
