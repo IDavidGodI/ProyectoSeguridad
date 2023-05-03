@@ -1,5 +1,5 @@
 
-package Servlets;
+package controlador;
 
 import Comunes.PropiedadesEnvios;
 import java.util.Scanner;

@@ -3,8 +3,6 @@ package modelo;
 
 import Comunes.PropiedadesConexion;
 import java.io.BufferedWriter;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -17,12 +15,13 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
-
+import java.sql.PreparedStatement;
 
 public class Conexion { 
+    private static Conexion sConexion;
     private Properties credenciales;
     Connection conexion =  null;
-    private static Conexion sConexion;
+    PreparedStatement ps;
     private Conexion() throws IOException {
         
         credenciales= new Properties();
@@ -45,13 +44,13 @@ public class Conexion {
             Logger.getLogger(Conexion.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    public Conexion getConexion(){
+    public static Connection getConexion(){
         if (sConexion!=null) try {
             sConexion = new Conexion();
         } catch (IOException ex) {
             Logger.getLogger(Conexion.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return sConexion;
+        return sConexion.conexion;
     }
     
     public void setCredenciales(File archivoConf,String correo, String clave) throws IOException{

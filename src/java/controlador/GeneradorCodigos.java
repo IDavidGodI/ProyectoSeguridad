@@ -1,5 +1,5 @@
 
-package Servlets;
+package controlador;
 
 import java.util.Random;
 
