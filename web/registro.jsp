@@ -29,7 +29,7 @@
         %>
             
         <h2>Registrarse</h2>
-        <p>En Perros salchicha voladores gatunos cats pio pio muuu</p>
+        <!--<p>En Perros salchicha voladores gatunos cats pio pio muuu</p>-->
         
         <form method="post" action="registro">
                 <label for="correo">Dirección de correo:</label>

@@ -16,23 +16,17 @@ public class ControladorCorreo {
     private static void cargarConfiguracion() throws InvalidParameterException, IOException {
         File f = new File(PropiedadesEnvios.RUTA_PROPIEDADES);
         if (!f.exists()) ConfigurarEnvio.setCredenciales(f);
-
+        System.out.println("Archivo de credenciales: "+f.getAbsolutePath());
         InputStream is = new FileInputStream(f);
         
         propiedades.load(is);
-        if (propiedades.get(PropiedadesEnvios.PROP_CORREO)==null ||
-            propiedades.get(PropiedadesEnvios.PROP_CLAVE)==null
-        )
+        if (propiedades.get(PropiedadesEnvios.PROP_CORREO) == null || ((String)propiedades.get(PropiedadesEnvios.PROP_CORREO)).isEmpty() ||
+            propiedades.get(PropiedadesEnvios.PROP_CLAVE) == null || ((String)propiedades.get(PropiedadesEnvios.PROP_CLAVE)).isEmpty())
         {
             ConfigurarEnvio.setCredenciales(f);
             cargarConfiguracion();
         }
-        if (((String)propiedades.get(PropiedadesEnvios.PROP_CORREO)).isEmpty() ||
-            ((String) propiedades.get(PropiedadesEnvios.PROP_CLAVE)).isEmpty())
-        {
-            ConfigurarEnvio.setCredenciales(f);
-            cargarConfiguracion();
-        }
+
     }
     public static boolean enviarEmail(String para, String asunto,String contenido) throws IOException {
         if (para==null) return false;

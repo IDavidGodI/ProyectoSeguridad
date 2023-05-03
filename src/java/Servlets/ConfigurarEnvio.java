@@ -14,7 +14,6 @@ import java.util.Properties;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 public class ConfigurarEnvio {
-    static Scanner sc;
     public static void setCredenciales(File archivoConf,String correo, String clave) throws IOException{
         Properties propiedades = new Properties();
         if (!archivoConf.exists()){
@@ -30,16 +29,15 @@ public class ConfigurarEnvio {
         
         
         propiedades.store(bArchivo,"Credenciales de la direccion de correo que enviara los emails");
-        System.out.println("Archivo de credenciales creado: "+archivoConf.getAbsolutePath());
+        System.out.println("Archivo de credenciales creado");
     }
     public static void setCredenciales(File archivoConf) throws IOException{
-        sc = new Scanner(System.in);
         
         String correo = JOptionPane.showInputDialog("Correo de envios");
         System.out.println("correo: "+correo);
         String clave; 
         JPasswordField campoClave = new JPasswordField();
-        int ok = JOptionPane.showConfirmDialog(null, campoClave, "Enter Password", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+        int ok = JOptionPane.showConfirmDialog(null, campoClave, "Ingresar contraseña", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
 
         if (ok == JOptionPane.OK_OPTION) {
           clave = new String(campoClave.getPassword());
