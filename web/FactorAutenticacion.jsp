@@ -11,7 +11,7 @@
 <html>
 <head>
     <title>Autenticación de código</title>
-    <link rel="stylesheet" href="formulario.css">
+    <link rel="stylesheet" href="css/formulario.css">
 </head>
 <body>
     <%

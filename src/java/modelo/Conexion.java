@@ -15,13 +15,11 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
-import java.sql.PreparedStatement;
 
 public class Conexion { 
     private static Conexion sConexion;
     private Properties credenciales;
     Connection conexion =  null;
-    PreparedStatement ps;
     private Conexion() throws IOException {
         
         credenciales= new Properties();
@@ -30,22 +28,27 @@ public class Conexion {
         String usuario = credenciales.getProperty(PropiedadesConexion.PROP_USUARIO);
         String clave = credenciales.getProperty(PropiedadesConexion.PROP_CLAVE);
         String url = String.format(
-                "jdbs:sqlserver://localhost1433;"
-                        + "database=%s;"
+                "jdbc:sqlserver://localhost:1433;"
+                        + "databaseName=%s;"
                         + "user=%s;"
                         + "password=%s;"
+                        + "encrypt=false;"
                         + "trustServerCertificate=false;"
-                        + "loginTimeout=30;"
+                        + "loginTimeout=20;"
                 , bd,usuario,clave
         );
         try {
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             conexion = DriverManager.getConnection(url);
         } catch (SQLException ex) {
+            System.out.println(url);
+            Logger.getLogger(Conexion.class.getName()).log(Level.INFO, null, ex);
+        } catch (ClassNotFoundException ex) {
             Logger.getLogger(Conexion.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     public static Connection getConexion(){
-        if (sConexion!=null) try {
+        if (sConexion==null) try {
             sConexion = new Conexion();
         } catch (IOException ex) {
             Logger.getLogger(Conexion.class.getName()).log(Level.SEVERE, null, ex);

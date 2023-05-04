@@ -5,8 +5,10 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import = "Comunes.PropiedadesEnvios"%>
 <%--<jsp:include page="/envioCorreos" />--%>
 <!DOCTYPE html>
+
 <html>
 <head>
     <%
@@ -38,7 +40,7 @@
 </head>
 <body>
     <h3>Código de verificación:</h3>
-    <div id="codigo"><%= request.getAttribute("codVerificacion") %></div>
+    <div id="codigo"><%= request.getAttribute(PropiedadesEnvios.COD_VERIFICACION) %></div>
     <img src="<%= request.getAttribute("imagenCorreo") %>" alt="No fue posible cargar el gif :(">
 </body>
 </html>

@@ -1,5 +1,7 @@
 package controlador;
 
+import Comunes.Formularios;
+import Comunes.PropiedadesEnvios;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -32,8 +34,7 @@ public class envioCorreos extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String codigoVerificacion = GeneradorCodigos.generarCodigoVerificacion();
         String emailDestino =(String) request.getAttribute("destinatario");
-        
-        request.setAttribute("codVerificacion", codigoVerificacion);
+        request.setAttribute(PropiedadesEnvios.COD_VERIFICACION, codigoVerificacion);
         request.setAttribute("imagenCorreo", "https://media.tenor.com/_4v3Nx_hzjwAAAAM/peepo.gif");
         final StringWriter writer = new StringWriter();
         getServletContext().getRequestDispatcher("/correoVerificacion.jsp").include(request, new HttpServletResponseWrapper(response) {
@@ -47,9 +48,11 @@ public class envioCorreos extends HttpServlet {
         if (ControladorCorreo.enviarEmail(emailDestino, "Codigo de verificacion", contenidoCorreo))
         {
             HttpSession sesion = request.getSession();
-            CodigoVerificacion limiteCodVerif = new CodigoVerificacion(1.5f);
-            sesion.setAttribute("limiteCodVerif", limiteCodVerif);
-            sesion.setAttribute("codigoVerificacion", codigoVerificacion);
+            System.out.println("Codigo generado: "+codigoVerificacion);
+            CodigoVerificacion.setCodigoVerificacion(request, codigoVerificacion, 1);
+            sesion.setAttribute(Formularios.CORREO_ENVIADO,request.getAttribute(Formularios.CORREO_ENVIADO));
+            sesion.setAttribute(Formularios.CLAVE_ENVIADA,request.getAttribute(Formularios.CLAVE_ENVIADA));
+            sesion.setAttribute(PropiedadesEnvios.USUARIO_REGISTRADO,request.getAttribute(PropiedadesEnvios.USUARIO_REGISTRADO));
             response.sendRedirect("FactorAutenticacion.jsp");
             return;
         }

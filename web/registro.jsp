@@ -10,22 +10,18 @@
 <html>
 <head>
     <title>Registrarse</title>
-    <link rel="stylesheet" href="formulario.css">
+    <link rel="stylesheet" href="css/formulario.css" type = "text/css">
 </head>
 <body>
     <div class="container">
         
-        <%
-            
+        <%     
             String estadoCorreo = (String) request.getAttribute(Formularios.ESTADO_CORREO);
             String estadoClave = (String) request.getAttribute(Formularios.ESTADO_CLAVE);
             String estadoConfirmClave = (String) request.getAttribute(Formularios.ESTADO_CONFIRM_CLAVE);
             
             String iCorreo = (String) request.getAttribute(Formularios.CORREO_ENVIADO);
             String iClave = (String) request.getAttribute(Formularios.CLAVE_ENVIADA);
-            
-            
-
         %>
             
         <h2>Registrarse</h2>
