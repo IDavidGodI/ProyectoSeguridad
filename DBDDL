@@ -1,0 +1,9 @@
+create database servicio_login
+use servicio_login;
+
+create table usuario(
+	ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    CORREO VARCHAR(250) NOT NULL,
+    CONSTRAINT C_CORREO UNIQUE(CORREO),
+    CLAVE VARCHAR(64) NOT NULL
+);
