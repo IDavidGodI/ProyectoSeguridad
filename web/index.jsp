@@ -9,7 +9,7 @@
 <!DOCTYPE html>
 <%
     if (!AutenticacionUsuarios.validarSesion(request, response)) response.sendRedirect("InicioSesion.jsp");
-    AutenticacionUsuarios.crearSesion(request, response);
+    else AutenticacionUsuarios.crearSesion(request, response);
 %>
 <html>
     <head>
