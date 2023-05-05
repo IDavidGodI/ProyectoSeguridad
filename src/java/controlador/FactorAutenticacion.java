@@ -1,11 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
 package controlador;
 
 import Comunes.Formularios;
 import Comunes.PropiedadesEnvios;
+import Comunes.PropiedadesVerificacion;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -23,7 +20,6 @@ import modelo.UsuarioDAO;
  */
 @WebServlet(name = "FactorAutenticacion", urlPatterns = {"/FactorAutenticacion"})
 public class FactorAutenticacion extends HttpServlet {
-    String regexCodigo= "^[0-9]{6}$";
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -43,7 +39,6 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response) 
     if (!CodigoVerificacion.codigoExpirado(request)) {
         String codigoIngresado = request.getParameter(PropiedadesEnvios.COD_VERIFICACION);
         String codigoEnviado = (String) sesion.getAttribute(PropiedadesEnvios.COD_VERIFICACION);
-        if (codigoIngresado!=null)System.out.println("el codigo ingresado es valido: "+codigoIngresado.matches(regexCodigo));
         if (!codigoIngresado.equals(codigoEnviado)) {
             errores.add("El codigo de verificacion no es correcto, intente de nuevo");
 
@@ -51,15 +46,13 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response) 
             request.getRequestDispatcher("FactorAutenticacion.jsp").forward(request, response);
             return;
         }
+        request.setAttribute(PropiedadesVerificacion.COD_VAL, true);
         sesion.removeAttribute(PropiedadesEnvios.COD_VERIFICACION); 
         sesion.removeAttribute(PropiedadesEnvios.COD_VERIFICACION); 
         String correo =  (String) sesion.getAttribute(Formularios.CORREO_ENVIADO);
         String clave = (String)sesion.getAttribute(Formularios.CLAVE_ENVIADA);
-        if (estaRegistrado){
-            response.sendRedirect("index.jsp");
-            return;
-        }
-        if (uDAO.registrarUsuario(correo, clave)){
+        if (estaRegistrado || uDAO.registrarUsuario(correo, clave)){
+            AutenticacionUsuarios.crearSesion(request, response);
             response.sendRedirect("index.jsp");
             return;
         }

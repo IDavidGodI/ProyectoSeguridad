@@ -62,9 +62,13 @@ public class InicioSesion extends HttpServlet {
                     request.setAttribute(Formularios.CORREO_ENVIADO, correo);
                     request.setAttribute(Formularios.CLAVE_ENVIADA, clave);
                 try {
-                    if (uDAO.validarUsuario(correo, clave)){  
+                    if (uDAO.validarUsuario(correo, clave)){
+                        if (AutenticacionUsuarios.validarDobleFactor(request, response)){
+                            AutenticacionUsuarios.crearSesion(request, response);
+                            response.sendRedirect("index.jsp");
+                            return;
+                        } 
                         request.setAttribute(PropiedadesEnvios.USUARIO_REGISTRADO, true);
-                        System.out.println("USUARIO VALIDo");
                         request.getRequestDispatcher("envioCorreos").forward(request, response);
                         return;
                     }

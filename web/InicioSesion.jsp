@@ -6,7 +6,11 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import = "Comunes.Formularios"%>
+<%@page import = "controlador.AutenticacionUsuarios"%>
 <!DOCTYPE html>
+<%
+    if (AutenticacionUsuarios.validarSesion(request, response)) response.sendRedirect("index.jsp");
+%>
 <html>
 <head>
     <title>Iniciar Sesión</title>

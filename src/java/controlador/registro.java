@@ -68,7 +68,11 @@ public class registro extends HttpServlet {
                 request.setAttribute(Formularios.ESTADO_CORREO, "");
                 request.setAttribute(Formularios.ESTADO_CLAVE, "");
                 request.setAttribute(Formularios.ESTADO_CONFIRM_CLAVE, "");
-
+                if (AutenticacionUsuarios.validarDobleFactor(request, response)){
+                    AutenticacionUsuarios.crearSesion(request, response);
+                    response.sendRedirect("index.jsp");
+                    return;
+                } 
                 request.setAttribute("destinatario", correo);
                 request.setAttribute(Formularios.CORREO_ENVIADO, correo);
                 request.setAttribute(Formularios.CLAVE_ENVIADA, clave);

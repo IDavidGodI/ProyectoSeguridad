@@ -1,0 +1,10 @@
+create database servicio_login;
+
+use servicio_login;
+
+create table usuarios(
+	ID INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
+	CORREO VARCHAR(250) NOT NULL,
+	CONSTRAINT C_CORREO UNIQUE(CORREO),
+	CLAVE VARCHAR(64) NOT NULL
+);

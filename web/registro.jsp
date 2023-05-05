@@ -5,8 +5,12 @@
 --%>
 <%@page import = "java.util.List"%>
 <%@page import = "Comunes.Formularios"%>
+<%@page import = "controlador.AutenticacionUsuarios"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+<%
+    if (AutenticacionUsuarios.validarSesion(request, response)) response.sendRedirect("index.jsp");
+%>
 <html>
 <head>
     <title>Registrarse</title>

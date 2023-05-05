@@ -42,15 +42,6 @@ public class ControladorCorreo {
         propiedades.put("mail.smtp.port", "587");
         propiedades.put("mail.smtp.ssl.protocols", "TLSv1.2");
         propiedades.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
-
-
-//        Session session = Session.getInstance(propiedades, new javax.mail.Authenticator() {
-//         protected PasswordAuthentication getPasswordAuthentication() {
-//            return new PasswordAuthentication(remitente, clave);
-//         }
-//        });
-
-        
         
         final String remitente = propiedades.getProperty(PropiedadesEnvios.PROP_CORREO);
         final String clave = propiedades.getProperty(PropiedadesEnvios.PROP_CLAVE);
@@ -81,8 +72,6 @@ public class ControladorCorreo {
          System.out.println("Correo electrónico enviado.");
          return true;
         } catch (MessagingException e) {
-
-            e.printStackTrace();
             return false;
         }
    }

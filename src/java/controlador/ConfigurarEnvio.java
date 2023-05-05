@@ -2,7 +2,6 @@
 package controlador;
 
 import Comunes.PropiedadesEnvios;
-import java.util.Scanner;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.BufferedWriter;
@@ -34,7 +33,6 @@ public class ConfigurarEnvio {
     public static void setCredenciales(File archivoConf) throws IOException{
         
         String correo = JOptionPane.showInputDialog("Correo de envios");
-        System.out.println("correo: "+correo);
         String clave; 
         JPasswordField campoClave = new JPasswordField();
         int ok = JOptionPane.showConfirmDialog(null, campoClave, "Ingresar contraseña", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
