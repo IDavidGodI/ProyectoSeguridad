@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
 
 import java.io.StringWriter;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpSession;
 
 /**
@@ -26,7 +25,6 @@ public class envioCorreos extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        System.out.println("get");
         response.sendRedirect("registro.jsp");
     }
 
@@ -44,8 +42,15 @@ public class envioCorreos extends HttpServlet {
         });
         String contenidoCorreo = writer.toString();
         System.out.println(contenidoCorreo);
-
-        if (ControladorCorreo.enviarEmail(emailDestino, "Codigo de verificacion", contenidoCorreo))
+        
+        boolean enEnvio =(boolean) request.getAttribute(PropiedadesEnvios.EN_ENVIO);
+        boolean correoEnviado = false;
+        if (!enEnvio){
+            request.setAttribute(PropiedadesEnvios.EN_ENVIO, true);
+             correoEnviado= ControladorCorreo.enviarEmail(emailDestino, "Codigo de verificacion", contenidoCorreo);
+            request.setAttribute(PropiedadesEnvios.EN_ENVIO, false);
+        }
+        if (correoEnviado)
         {
             HttpSession sesion = request.getSession();
             System.out.println("Codigo generado: "+codigoVerificacion);

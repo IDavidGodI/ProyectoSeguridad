@@ -32,7 +32,7 @@ public class ControladorCorreo {
         if (para==null) return false;
 
         
-
+        
 
         propiedades = new Properties();
         cargarConfiguracion();

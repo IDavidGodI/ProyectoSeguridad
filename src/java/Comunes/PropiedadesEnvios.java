@@ -8,4 +8,5 @@ public class PropiedadesEnvios {
     public static final String COD_VERIFICACION = "codigoVerificacion";
     public static final String TS_VERIFICACION = "marcaTiempoCodigoVerificacion";
     public static final String USUARIO_REGISTRADO = "registrado";
+    public static final String EN_ENVIO = "EnEnvio";
 }
