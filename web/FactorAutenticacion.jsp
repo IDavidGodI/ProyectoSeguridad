@@ -24,7 +24,14 @@
                 <label for="code">Código:</label>
                 <input type="text" name="codigoVerificacion" estado=<%=estadoCodigo%> id="codigoVerificacion"><br><br>
                 <input type="submit" value="Autenticar">
+                <p>
+                    Ir a
+                    <a href="InicioSesion.jsp"> inicio de sesion </a>
+                    o
+                    <a href="registro.jsp"> registro </a>
+                </p>
         </form>
+        
         <jsp:include page="ListaErrores.jsp" />
         
     </div>

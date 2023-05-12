@@ -40,41 +40,23 @@ public class envioCorreos extends HttpServlet {
                 return new PrintWriter(writer);
             }
         });
-        ArrayList<String> errores = new ArrayList<>();
-        HttpSession sesion = request.getSession();
-        String contenidoCorreo = writer.toString();
+                String contenidoCorreo = writer.toString();
         System.out.println(contenidoCorreo);
-        Object o = sesion.getAttribute(PropiedadesEnvios.EN_ENVIO);
-        boolean enEnvio = o!=null? (boolean) o : false;
-        boolean correoEnviado = false;
-        if (!enEnvio){
-            sesion.setAttribute(PropiedadesEnvios.EN_ENVIO, true);
-             correoEnviado= ControladorCorreo.enviarEmail(emailDestino, "Codigo de verificacion", contenidoCorreo);
-            sesion.setAttribute(PropiedadesEnvios.EN_ENVIO, false);
-        }else {
-            System.out.println("Correo en proceso!");
-            
-        }
-        
-        if (correoEnviado)
+
+        if (ControladorCorreo.enviarEmail(emailDestino, "Codigo de verificacion", contenidoCorreo))
         {
+            HttpSession sesion = request.getSession();
             System.out.println("Codigo generado: "+codigoVerificacion);
             CodigoVerificacion.setCodigoVerificacion(request, codigoVerificacion, 1);
             sesion.setAttribute(Formularios.CORREO_ENVIADO,request.getAttribute(Formularios.CORREO_ENVIADO));
             sesion.setAttribute(Formularios.CLAVE_ENVIADA,request.getAttribute(Formularios.CLAVE_ENVIADA));
             sesion.setAttribute(PropiedadesEnvios.USUARIO_REGISTRADO,request.getAttribute(PropiedadesEnvios.USUARIO_REGISTRADO));
-            sesion.removeAttribute(PropiedadesEnvios.EN_ENVIO);
             response.sendRedirect("FactorAutenticacion.jsp");
             return;
         }
         request.removeAttribute("codVerificacion");
         request.removeAttribute("imagenCorreo");
-        request.setAttribute(Formularios.LISTA_ERRORES, errores);
-        String direccionProyecto = request.getContextPath();
-        String URLOrigen = request.getHeader("Referer");
-        String destino = URLOrigen.substring(URLOrigen.indexOf(direccionProyecto) + direccionProyecto.length());
-        System.out.println(destino);
-        request.getRequestDispatcher(destino).forward(request, response);
+        request.getRequestDispatcher("registro.jsp").forward(request, response);
     }
 
     @Override
