@@ -27,24 +27,15 @@ public class Conexion {
         String bd = "servicio_login";
         String usuario = credenciales.getProperty(PropiedadesConexion.PROP_USUARIO);
         String clave = credenciales.getProperty(PropiedadesConexion.PROP_CLAVE);
-        String url = String.format(
-                "jdbc:sqlserver://localhost:1433;"
-                        + "databaseName=%s;"
-                        + "user=%s;"
-                        + "password=%s;"
-                        + "encrypt=false;"
-                        + "trustServerCertificate=false;"
-                        + "loginTimeout=20;"
-                , bd,usuario,clave
-        );
+        String url = String.format("jdbc:mysql://localhost:3306/%s", bd);
         try {
-            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            conexion = DriverManager.getConnection(url);
+//            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+//            conexion = DriverManager.getConnection(url);
+            DriverManager.registerDriver(new org.gjt.mm.mysql.Driver());
+            conexion = DriverManager.getConnection(url, usuario, clave);
         } catch (SQLException ex) {
             System.out.println(url);
             Logger.getLogger(Conexion.class.getName()).log(Level.INFO, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Conexion.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     public static Connection getConexion(){
@@ -102,7 +93,7 @@ public class Conexion {
         
         credenciales.load(is);
         if (credenciales.get(PropiedadesConexion.PROP_USUARIO) == null || ((String)credenciales.get(PropiedadesConexion.PROP_USUARIO)).isEmpty() ||
-            credenciales.get(PropiedadesConexion.PROP_CLAVE) == null || ((String)credenciales.get(PropiedadesConexion.PROP_CLAVE)).isEmpty())
+            credenciales.get(PropiedadesConexion.PROP_CLAVE) == null)
         {
             setCredenciales(f);
             cargarConfiguracion();
